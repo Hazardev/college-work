@@ -67,7 +67,7 @@ int getUserInt(string msg)
     }
     else if (num >= FACT_LIMIT)
     {
-        printf("\nThe buffer would overflow with your number, 65 is the max!\n\n");
+        printf("\nThe buffer would overflow with your number, %i is the max!\n\n", FACT_LIMIT);
         exit(1);
         // return getUserInt(msg);
     }
