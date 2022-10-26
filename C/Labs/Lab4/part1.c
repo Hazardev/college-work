@@ -33,7 +33,7 @@ int main(void)
 {
     // variables
     double sum = 0, avg = 0;
-    double min = 0, max = 0;
+    double min = INT_MAX, max = INT_MIN;
 
     int i_total = 0;
     int i_valid = 0;
