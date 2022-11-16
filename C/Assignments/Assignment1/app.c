@@ -155,7 +155,7 @@ int main(void)
     }
 
 
-    // exit program successfull (0 = success)
+    // exit program successfully (0 = success)
     exit(0);
 
 }
