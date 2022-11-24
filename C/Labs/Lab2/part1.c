@@ -1,68 +1,142 @@
 /**
  * @credit: Copyright (c) hazardev
  * @license: MIT License
+ * @note: too lazy to account for buffer over/underflow
  */
 
 // Headers
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <limits.h>
 #include <math.h>
+
+
+// Structs
+typedef char *string;
+
+typedef struct input
+{
+    bool valid;
+    int value;
+}
+input;
+
+
+// Prototypes
+input *getNextInput(string msg);
 
 
 // Main
 int main(void)
 {
     // variables
-    double space;
-    double width;
+    double sum = 0, avg = 0;
+    double min = INT_MAX, max = INT_MIN;
 
-    // get user inputs (using scanf)
-    printf("Input total space available: ");
-    scanf("%lf", &space);
-    printf("Input tile width: ");
-    scanf("%lf", &width); // */
+    int i_total = 0;
+    int i_valid = 0;
 
-    // check if valid, or if any fit
-    if (width == 0.0 || space == 0.0)
+    // loop for input
+    while (true)
     {
-        // display message & return fail
-        if (space == 0.0) { printf("\n"); }
-        printf("\nError\n\nPlease use decimal numbers, other than 0.0\n\n");
-        return 1;
-    }
-    if (width >= space)
-    {
-        // display message & return success
-        printf("\nResult\n\nNo tiles will fit in the space provided\n\n");
-        return 0;
-    }
+        // create new input
+        string prompt = malloc(32 * sizeof(char));
+        sprintf(prompt, "Enter integer #%i : ", i_valid + 1);
+        input *next = getNextInput(prompt);
 
-    // calculate amounts / math
-    int amount = 0;
-    double gap = 0;
-    for (double i = space; i > 0; i -= width)
-    {
-        if (i - width < (double) 0)
+        // increment total inputs
+        i_total += 1;
+
+        // if valid, ...
+        if (next->valid == true)
         {
-            gap = i / 2;
-        }
-        else
-        {
-            amount += 1;
+            // ... check for -1, break loop
+            if (next->value == -1)
+            {
+                i_total -= 1;
+                free(next);
+                break;
+            }
+
+            // ... increment valid inputs
+            i_valid += 1;
+
+            // ... add to sum
+            sum += next->value;
+
+            // ... check and update if min
+            if (next->value < min)
+            {
+                min = next->value;
+            }
+
+            // ... check and update if max
+            if (next->value > max)
+            {
+                max = next->value;
+            }
+
+            // ... clean up memory
+            free(next);
         }
     }
 
-    int black = (int) ((double) floor((double) amount / 2) + (amount % 2));
-    int white = (int) ((double) floor((double) amount / 2));
+    // final math
+    avg = sum / (double) i_valid;
 
-    // display result
-    printf("\nResult\n");
-    printf("\nFor the total space of %f, and tiles being %f wide,\n", space, width);
-    printf("\nYou will need %i tiles total\n", amount);
-    printf("%i black\n", black);
-    printf("%i white\n\n", white);
-    printf("A gap of %f, each side, is needed to center the tiles\n\n", gap);
+    // output results
+    printf("\n\nYou've inputted %i entries, %i of which were valid.", i_total, i_valid);
+    printf("\n\nSummary");
+    printf("\nTotal sum :          %.00lf", sum);
+    printf("\nTotal average :      %.00lf", avg);
+    printf("\nSmallest number :    %.00lf", min);
+    printf("\nLargest number :     %.00lf", max);
+    printf("\n\n");
 
     // return success
-    return 0;
+    exit(0);
+}
+
+
+// Functions
+input *getNextInput(string msg)
+{
+    // reserve memory & check
+    input *new = (input *) calloc(1, sizeof(input));
+    if (new == NULL)
+    {
+        // couldnt create input; clean up and abort
+        printf("Error creating input, system out of memory?\n");
+        free(new);
+        printf("Aborting...\n");
+        exit(1);
+    }
+
+    // base variables
+    int chk = INT_MIN;
+    int num = chk;
+
+    // get input and check (ignoring buffer under/overflow -> @note)
+    printf("%s", msg);
+    scanf("%i", &num);
+    getchar();
+
+    if (num == chk)
+    {
+        // invalid
+        new->valid = false;
+        new->value = 0;
+        printf("\nYou've entered an invalid integer! Use -1 to exit.\n");
+    }
+    else
+    {
+        // valid
+        new->valid = true;
+        new->value = num;
+    }
+
+    // return
+    return new;
 }

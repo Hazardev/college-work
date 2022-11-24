@@ -1,24 +1,17 @@
 /**
  * @credit: Copyright (c) hazardev
  * @license: MIT License
+ * @note: FACT_LIMIT tested against ULLONG_MAX
  */
 
 // Headers
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
+#include <limits.h>
+#include <stdlib.h>
 
 
 // Globals
-const float P_ASS = 0.3;
-const float P_WRI = 0.6;
-const float P_LAB = 0.1;
-
-const float MIN_A = 70;
-const float MIN_B = 60;
-const float MIN_C = 50;
-const float MIN_D = 40;
-const float MIN_E = 0;
+#define FACT_LIMIT 66
 
 
 // Structs
@@ -26,98 +19,82 @@ typedef char *string;
 
 
 // Prototypes
-double getPercentageInput(string name);
-double getWeightedAverage(double a, double w_a, double b, double w_b, double c, double w_c);
-char getGrade(double average);
+int getUserInt(string msg);
+unsigned long long getFactorial(int i);
 
 
 // Main
 int main(void)
 {
-    // get user inputs
-    double assignment = getPercentageInput("assignment");
-    double written = getPercentageInput("written exam");
-    double lab = getPercentageInput("lab exam");
+    // get int from user & check
+    int num = getUserInt("\nEnter an integer for factorial");
+    if (num < 0)
+    {
+        // abort with error code
+        printf("\nUnable to get negative factorials.\n\n");
+        exit(1);
+    }
 
-    // get average & grade
-    double average = getWeightedAverage(assignment, P_ASS, written, P_WRI, lab, P_LAB);
-    char grade = getGrade(average);
+    // get factorial
+    unsigned long long fact = getFactorial(num);
 
     // output
-    printf("\nWeighted average and grade is : %.2lf%% ( %c )\n\n", average, grade);
+    printf("\nFactorial for %d = %llu\n\n", num, fact);
 
-    // successful return
-    return 0;
+    // exit successfully
+    exit(0);
 }
 
 
 // Functions
-double getPercentageInput(string name)
+int getUserInt(string msg)
 {
-    // base variable
-    double input = -0.1;
+    // base variables
+    int chk = INT_MIN;
+    int num = chk;
 
-    // loop until proper input
-    while (input < 0 || input > 100)
+    // get user input
+    printf("%s : ", msg);
+    scanf("%d", &num);
+    getchar();
+
+    // check if valid, & against limit
+    if (num == chk)
     {
-        // message & user input
-        printf("\nInput %s percentage: ", name);
-        scanf("%lf", &input);
-        getchar();
-
-        // check if valid
-        if (input < 0 || input > 100)
-        {
-            printf("\nError: Invalid percentage provided, please make sure it's between 0 - 100%%.");
-        }
+        printf("\nInvalid integer given, try again!\n\n");
+        exit(1);
+        // return getUserInt(msg);
     }
-
-    // return value
-    return input;
-}
-
-
-double getWeightedAverage(double a, double w_a, double b, double w_b, double c, double w_c)
-{
-    // base variable
-    double overall = 0.0;
-
-    // find weighted average
-    overall += ((a / 100) * w_a);
-    overall += ((b / 100) * w_b);
-    overall += ((c / 100) * w_c);
-    overall *= 100;
-
-    // return average
-    return overall;
-}
-
-
-char getGrade(double average)
-{
-    // return grade
-    if (average >= MIN_A)
+    else if (num >= FACT_LIMIT)
     {
-        return 'A';
-    }
-    else if (average >= MIN_B)
-    {
-        return 'B';
-    }
-    else if (average >= MIN_C)
-    {
-        return 'C';
-    }
-    else if (average >= MIN_D)
-    {
-        return 'D';
-    }
-    else if (average >= MIN_E)
-    {
-        return 'E';
+        printf("\nThe buffer would overflow with your number, %i is the max!\n\n", FACT_LIMIT);
+        exit(1);
+        // return getUserInt(msg);
     }
     else
     {
-        return 'F';
+        return num;
     }
+}
+
+
+unsigned long long getFactorial(int num)
+{
+    // check for negative
+    if (num <= 0)
+    {
+        return 0;
+    }
+
+    // base variable
+    unsigned long long fact = 1;
+
+    // math
+    for (int i = 1; i <= num; i++)
+    {
+        fact *= i;
+    }
+
+    // returned
+    return fact;
 }
