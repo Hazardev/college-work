@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?credit Copyright -c- hazardev ?>
+    
+<!--
+    
+    Information
+    
+    This is a VERY simple and VERY barebones sample answer for the first App Development asssignment!
+    
+    That means there are NO images, but there are objects for it.
+    If you'd like to put in your own images, look for (CTRL+F) "Source=" in this page and put in the image names.
+    
+    For images that change at run-time please visit the MainPage.xaml.cs file!
+    
+    Please remember that uploading / presenting this project AS IS will not get you any marks, as
+    you'd have to include licensing and original credit, and it's public on GitHub.
+    
+    Comments are here to explain what everything does line-by-line, and the project does in fact work and run.
+    
+-->
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ATUWhackAMole.MainPage">
+
+    <!-- A grid with no columns or rows, to allow layering, everything inside is LAYERED -->
+    <Grid>
+
+        <!-- Background, using an Image, without a Source for this example -->
+        <Image Source=""
+               BackgroundColor="White"
+               Aspect="AspectFill"
+               ZIndex="0" />
+        
+        <!-- Title layout, housing the main title -->
+        <HorizontalStackLayout HorizontalOptions="End"
+                               VerticalOptions="Start"
+                               Padding="24" >
+
+            <!-- WhackAMole base title here -->
+            <Label Text="Title Here"
+                   FontSize="40"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   CharacterSpacing="0.8"
+                   HorizontalTextAlignment="Center" />
+
+        </HorizontalStackLayout>
+        
+        <!-- Score layout, contains score, time, etc. objects -->
+        <VerticalStackLayout x:Name="StatsContainer"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Start"
+                             Padding="24,34,0,0"
+                             Spacing="10" >
+
+            <HorizontalStackLayout HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   Spacing="12" >
+
+                <Label Text="Score"
+                       FontSize="16"
+                       TextColor="Black"
+                       HorizontalTextAlignment="Start" />
+
+                <Label x:Name="ScoreLabel"
+                       Text="0"
+                       FontSize="16"
+                       TextColor="Black"
+                       CharacterSpacing="1.2"
+                       HorizontalTextAlignment="Start" />
+
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout HorizontalOptions="Start"
+                                   VerticalOptions="Start"
+                                   Spacing="12" >
+
+                <Label Text="Time"
+                       FontSize="16"
+                       TextColor="Black"
+                       HorizontalTextAlignment="Start" />
+
+                <Label x:Name="TimerLabel"
+                       Text="0:00"
+                       FontSize="16"
+                       TextColor="Black"
+                       HorizontalTextAlignment="Start"
+                       CharacterSpacing="1.2"
+                       Padding="4,0,0,0"/>
+
+            </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+
+        <!-- The main content layout, housing the initial menu and game screen -->
+        <VerticalStackLayout HorizontalOptions="Center"
+                             VerticalOptions="Center" >
+
+            <!-- The main menu container (initial screen) -->
+            <VerticalStackLayout x:Name="MenuContainer"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 Spacing="16"
+                                 IsVisible="True" >
+                
+                <!-- Instructing the user to click a button below, with a label -->
+                <Label Text="Pick your grid size!"
+                       FontSize="28"
+                       CharacterSpacing="1.25"
+                       TextColor="Black" />
+                
+                <!-- Layout to make the buttons horizontal instead of vertical -->
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                       Spacing="28" >
+
+                    <!-- Start an easy / 3x3 game -->
+                    <Button x:Name="Play3x3Button"
+                            Text="3 × 3"
+                            Padding="20,7,20,8"
+                            CornerRadius="8"
+                            BorderWidth="1"
+                            BackgroundColor="Transparent"
+                            BorderColor="DarkGreen"
+                            TextColor="DarkGreen"
+                            Clicked="Play3x3Button_Clicked" />
+
+                    <!-- Start an easy / 5x5 game -->
+                    <Button x:Name="Play5x5Button"
+                            Text="5 × 5"
+                            Padding="20,7,20,8"
+                            CornerRadius="8"
+                            BorderWidth="1"
+                            BackgroundColor="Transparent"
+                            BorderColor="DarkRed"
+                            TextColor="DarkRed"
+                            Clicked="Play5x5Button_Clicked" />
+
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+            
+            <!-- The actual game / grid container (in-game screen) -->
+            <HorizontalStackLayout x:Name="GameContainer"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   IsVisible="False" />
+
+            <!-- The game over screen container (end screen) -->
+            <VerticalStackLayout x:Name="GameOverContainer"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center"
+                                 Spacing="16"
+                                 IsVisible="False" >
+
+                <!-- Label letting the user know the game is over -->
+                <Label Text="Game Over!"
+                       FontSize="28"
+                       CharacterSpacing="1.25"
+                       TextColor="Black" />
+
+                <!-- Button that takes user back to the main menu -->
+                <Button x:Name="BackToMenuButton"
+                        Text="Retry"
+                        CharacterSpacing="1.8"
+                        Padding="20,7,20,8"
+                        Margin="32,0,32,0"
+                        CornerRadius="8"
+                        BorderWidth="1"
+                        BackgroundColor="Transparent"
+                        BorderColor="DarkRed"
+                        TextColor="DarkRed"
+                        Clicked="BackToMenuButton_Clicked" />
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+        
+        <!-- A layout housing the controls (mainly just the reset / stop game button) -->
+        <HorizontalStackLayout HorizontalOptions="Center"
+                               VerticalOptions="End"
+                               Padding="40" >
+            
+            <!-- The reset button for ending a game -->
+            <Button x:Name="ResetButton"
+                    Text="Reset"
+                    Padding="20,7,20,8"
+                    CornerRadius="8"
+                    BorderWidth="1"
+                    BackgroundColor="Transparent"
+                    BorderColor="Black"
+                    TextColor="Black"
+                    Clicked="ResetButton_Clicked"
+                    IsVisible="False" />
+
+        </HorizontalStackLayout>
+
+    </Grid>
+
+</ContentPage>
