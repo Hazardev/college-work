@@ -9,14 +9,14 @@
  * 	You can find information / explenation about something commented
  * 	in the notes' section below!
  * 
- * 	Even better, if you don't know what something means or does,
- *  all you need to do is double click on something that has an
- *  asteriskø* and then press Ctrl + F to find it below.
+ *	Even better, if you don't know what something means or does,
+ *	all you need to do is double click on something that has an
+ *	asteriskø* and then press Ctrl + F to find it below.
+ *	
+ *	Links are provided for every note since they're better explenations than mine!
+ *	You can CTRL + Click them to open them. Nice quick n' easy :)
  *  
- *  Links are provided for every note since they're better explenations than mine!
- *  You can CTRL + Click them to open them. Nice quick n' easy :)
- *  
- *  REMINDER - 	PLEASE.. DO NOT COPY PASTE !
+ *	REMINDER -	PLEASE.. DO NOT COPY PASTE !
  *  			unless.. you've fully changed the :
  *  			- structure
  *  			- variable names
@@ -34,8 +34,22 @@
  * 						if you make something private you can't use it outside the class.
  * 						-> https://www.javatpoint.com/private-keyword-in-java
  * 
+ * 	- constructorø* :	A method that's called when a new object is created from the class (initializing it),
+ * 						which for example, in this case would be 'new MusicTeacher()'.
+ * 						You can also add multiple, that take different parameters to create!
+ * 						-> https://www.w3schools.com/java/java_constructors.asp
+ * 
  * 	- thisø* :			'this' is used inside methods or constructors to access the current object, it's variables, and more.
  * 						-> https://www.w3schools.com/java/ref_keyword_this.asp
+ * 
+ * 	- interfaceø* :		Similar to abstractø* classes!
+ * 						It's featured by using "implements" instead of "extends".
+ * 						-> https://www.w3schools.com/java/java_interface.asp
+ * 
+ * 	- overloadingø* :	A way of making methods parameters dynamic. This is done by making more than one method with the exact
+ * 						same name, taking different parameters, or returning different types, for different situations.
+ * 						Have a method/function that you want to be able to shove 1 OR 2 numbers into? Overload it and make two!
+ * 						-> https://www.w3schools.com/java/java_methods_overloading.asp
  */
 
 
@@ -59,7 +73,7 @@ public class BookingAgent extends Musician implements BusinessMusicCertification
 		this.bonus = bonus;
 	}
 	
-	// sets the agent's bonus (overloaded)
+	// sets the agent's bonus (overloadingø*)
 	public void setBonus(double bonus)
 	{
 		this.bonus = bonus;

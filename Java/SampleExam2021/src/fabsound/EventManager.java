@@ -9,14 +9,14 @@
  * 	You can find information / explenation about something commented
  * 	in the notes' section below!
  * 
- * 	Even better, if you don't know what something means or does,
- *  all you need to do is double click on something that has an
- *  asteriskø* and then press Ctrl + F to find it below.
+ *	Even better, if you don't know what something means or does,
+ *	all you need to do is double click on something that has an
+ *	asteriskø* and then press Ctrl + F to find it below.
+ *	
+ *	Links are provided for every note since they're better explenations than mine!
+ *	You can CTRL + Click them to open them. Nice quick n' easy :)
  *  
- *  Links are provided for every note since they're better explenations than mine!
- *  You can CTRL + Click them to open them. Nice quick n' easy :)
- *  
- *  REMINDER - 	PLEASE.. DO NOT COPY PASTE !
+ *	REMINDER -	PLEASE.. DO NOT COPY PASTE !
  *  			unless.. you've fully changed the :
  *  			- structure
  *  			- variable names
@@ -37,6 +37,7 @@
  * 	- protectedø* :		Whatever is protected is limited from being accessed outside the current package, unless extended
  * 						from the original package.
  * 						-> https://www.geeksforgeeks.org/protected-keyword-in-java-with-examples/
+ * 
  * 	- constructorø* :	A method that's called when a new object is created from the class (initializing it),
  * 						which for example, in this case would be 'new MusicTeacher()'.
  * 						You can also add multiple, that take different parameters to create!
@@ -44,6 +45,9 @@
  * 
  * 	- thisø* :			'this' is used inside methods or constructors to access the current object, it's variables, and more.
  * 						-> https://www.w3schools.com/java/ref_keyword_this.asp
+ * 
+ * 	- cascadingø* :		A way of 'chaining' methods together, it only works if all methods you use return the same object. (thisø*)
+ * 						-> https://www.geeksforgeeks.org/method-chaining-in-java-with-examples/
  */
 
 
@@ -70,9 +74,10 @@ public class EventManager extends Musician
 	
 	EventManager(long id, String firstName, String lastName)
 	{
-		// referencing other constructor, above
+		// referencing other constructorø*, above
 		this(id, firstName + " " + lastName, 0.0, 0);
 		
+		// cascadingø* methods
 		this.setFirstName(firstName)
 			.setLastName(lastName);
 	}
@@ -83,7 +88,7 @@ public class EventManager extends Musician
 		this.name = String.format("%s %s", firstName, this.lastName);
 	}
 	
-	// methods that set the first and last name, returning this object Question 7c)
+	// methods that set the first and last name, returning this object (Question 7c)
 	public EventManager setFirstName(String firstName)
 	{
 		this.firstName = firstName;
@@ -141,7 +146,7 @@ public class EventManager extends Musician
 	@Override
 	public boolean equals(Object obj)
 	{
-		// catch in case casting or accessing errors
+		// catch in case casting or accessing errors (tl;dr prevents errors)
 		try
 		{
 			// cast object to event manager
@@ -158,6 +163,7 @@ public class EventManager extends Musician
 		}
 		catch (Exception e)
 		{
+			// something above failed, so they're probably not equal
 			return false;
 		}
 	}
@@ -170,6 +176,7 @@ public class EventManager extends Musician
 		
 		amy.numOfHours += 5;
 		
+		// method cascadingø*
 		amy.setFirstName("Amy")
 		   .setLastName("Lupton");
 		
