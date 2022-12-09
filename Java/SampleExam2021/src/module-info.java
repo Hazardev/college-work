@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author hazar
+ *
+ */
+module Sample {
+}
