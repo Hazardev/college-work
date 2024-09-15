@@ -1,4 +1,5 @@
 # A repository for college work, help and examples
+(Discontinued at request / issues with university)
 
 This repository is mostly self-explanetory for those studying the same course as me, but regardless of if you stumble across this randomly or came here direcly, I hope this helps you in some way, studying, referencing or anything else.
 
